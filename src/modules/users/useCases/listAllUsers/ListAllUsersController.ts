@@ -10,7 +10,10 @@ class ListAllUsersController {
     try {
       const { user_id } = request.headers
 
-      //@ts-ignore
+      if(Array.isArray(user_id)){
+        throw new Error("User id it cannot be an array!")
+      }
+      
       const users = this.listAllUsersUseCase.execute( { user_id} )
 
       return response.json(users)
