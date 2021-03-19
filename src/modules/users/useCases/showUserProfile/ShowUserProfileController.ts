@@ -11,9 +11,13 @@ class ShowUserProfileController {
 
       const user = this.showUserProfileUseCase.execute({user_id})
 
+      if(!user){
+        throw new Error("User does not exist.")
+      }
+
       return response.json(user)
     } catch (error) {
-      return response.status(404).json({error})
+      return response.status(404).json({error: { message: error.message }})
     }
   }
 }

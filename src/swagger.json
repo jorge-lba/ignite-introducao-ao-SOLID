@@ -1,0 +1,208 @@
+{
+  "openapi":"3.0.0",
+  "info": {
+    "title": "Challenge - Introduction to SOLID",
+    "description": "Challenge regarding the second chapter of the Ignite course - NodeJS.",
+    "version": "1.0.0",
+    "contact": {
+      "email":"jorgeluiz.b.alegretti@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post":{
+        "tags":["User"],
+        "summary": "Create a user",
+        "description": "This route will create a new user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema":{
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }, 
+                  "email":{
+                    "type": "string"
+                  }
+                },
+                "example":{
+                  "name": "User Test",
+                  "email": "user.test@email.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created."
+          },
+          "400": {
+            "description": "There is already a user with this email."
+          }
+        }
+      },
+      "get": {
+        "tags":["User"],
+        "summary": "User List",
+        "description": "List all users",
+        "parameters":[{
+            "in": "header",
+            "name": "user_id",
+            "schema": {
+              "type":"string",
+              "format": "uuid"
+            },
+            "required": true
+        }],
+        "responses":{
+          "200": {
+            "description":"User list.",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "type": "array",
+                  "items":{
+                    "type":"object",
+                    "properties": {
+                      "id":{
+                        "type": "string"
+                      },
+                      "name": {
+                        "type":"string"
+                      },
+                      "email":{
+                        "type":"string"
+                      },
+                      "admin":{
+                        "type":"boolean"
+                      },
+                      "created_at":{
+                        "type":"string",
+                        "format":"date-time"
+                      },
+                      "updated_at":{
+                        "type":"string",
+                        "format":"date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404":{
+            "description": "User does not exist or not is admin!."
+          }
+        }
+      }
+    },
+    "/users/{user_id}":{
+      "get":{
+        "tags": ["User"],
+        "summary": "Specific user.",
+        "description": "Shows a specific user.",
+        "parameters":[ {
+          "in": "path",
+          "name": "user_id",
+          "schema": {
+            "type":"string"
+          },
+          "required": true
+        }],
+        "responses":{
+          "200": {
+            "description":"Specific user.",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type":"object",
+                  "properties": {
+                    "id":{
+                      "type": "string"
+                    },
+                    "name": {
+                      "type":"string"
+                    },
+                    "email":{
+                      "type":"string"
+                    },
+                    "admin":{
+                      "type":"boolean"
+                    },
+                    "created_at":{
+                      "type":"string",
+                      "format":"date-time"
+                    },
+                    "updated_at":{
+                      "type":"string",
+                      "format":"date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404":{
+            "description": "User does not exist."
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin":{
+      "patch":{
+        "tags": ["User"],
+        "summary": "Turns administrator.",
+        "description": "Turns the user into an administrator.",
+        "parameters":[ {
+          "in": "path",
+          "name": "user_id",
+          "schema": {
+            "type":"string"
+          },
+          "required": true
+        }],
+        "responses":{
+          "200": {
+            "description":"The user became an administrator.",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type":"object",
+                  "properties": {
+                    "id":{
+                      "type": "string"
+                    },
+                    "name": {
+                      "type":"string"
+                    },
+                    "email":{
+                      "type":"string"
+                    },
+                    "admin":{
+                      "type":"boolean"
+                    },
+                    "created_at":{
+                      "type":"string",
+                      "format":"date-time"
+                    },
+                    "updated_at":{
+                      "type":"string",
+                      "format":"date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404":{
+            "description": "User does not exist."
+          }
+        }
+      }
+    }
+
+  }
+}
